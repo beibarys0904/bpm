@@ -18,17 +18,23 @@ public class GreetingController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name,
-//                           Model model
+    @GetMapping("/")
+    public String greeting(
                            Map<String, Object> model
     ){
 //        model.addAttribute("name", name);
-        model.put("name", name);
+//        model.put("name", name);
         return "greeting";
     }
 
-    @PostMapping
+    @GetMapping("/main")
+    public String main(Map<String, Object> model){
+        Iterable<User> users = userRepository.findAll();
+        model.put("users", users);
+        return "main";
+    }
+
+    @PostMapping("/main")
     public String add(@RequestParam String name,
                       @RequestParam String email,
                       Map<String, Object> model){
@@ -47,11 +53,12 @@ public class GreetingController {
         return "main";
     }
 
-    @GetMapping
-    public String main(Map<String, Object> model){
-        Iterable<User> users = userRepository.findAll();
+    @GetMapping("filter-2")
+    public String searchByEmail(@RequestParam String email, Map<String, Object> model){
+        List<User> users = userRepository.findByEmail(email);
         model.put("users", users);
         return "main";
     }
+
 
 }

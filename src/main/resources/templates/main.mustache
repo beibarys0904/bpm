@@ -1,9 +1,16 @@
 <html>
 <body>
     <div>
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+    <div>
         <form method="post">
             <input type="text" name="name" placeholder="name">
             <input type="text" name="email" placeholder="email">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
             <button type="submit">Save</button>
         </form>
     </div>
@@ -11,7 +18,13 @@
     <div>Users list</div>
     <form method="post" action="filter">
         <input type="text" name="name">
-        <button type="submit">Search</button>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+        <button type="submit">Search by name</button>
+    </form>
+    <form method="get" action="filter-2">
+        <input type="text" name="email">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+        <button type="submit">Search by email</button>
     </form>
     {{#users}}
         <div>
